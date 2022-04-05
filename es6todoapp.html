@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <title>To do app</title>
+  <style>
+    table {
+      margin-left: 300px;
+    }
+
+    th,
+    tr,
+    td {
+      border: 1px solid black;
+      padding: 5px;
+      ;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 class="text-center mt-3">To Do App</h1><br>
+  <div class="text-center">
+    <label class="form-label">Task Name : </label>
+    <input type="text" id="t_name" />
+    <button onclick="obj.add()">Add Task</button>
+    <span id="upbtn"></span>
+  </div><br>
+  <div class="text-center">
+    <table id="addtask" border="1">
+      <tr>
+        <th>Task Name</th>
+        <th>Actions</th>
+      </tr>
+    </table>
+  </div>
+  <script>
+      class Task
+      {
+        add() {
+      var a = document.getElementById("t_name").value;
+      let b = document.createElement("td")
+      b.textContent = a
+      let c = document.createElement("td")
+      c.innerHTML = "<button onclick='obj.del(this)'>Delete</button> <button onclick='obj.edit(this)'>Edit</button>";
+      let d = document.createElement("tr")
+      d.append(b)
+      d.append(c)
+
+      let last = document.querySelector("#addtask");
+      last.append(d);
+      document.getElementById("t_name").value = ""
+        }
+
+      del(r) {
+      var i = r.parentNode.parentNode.rowIndex;
+      console.log(i);
+      document.getElementById("addtask").deleteRow(i);
+    }
+    edit(r) {
+      var row = r.parentNode.parentNode;
+      console.log(row)
+      var cells = row.getElementsByTagName('td')
+      console.log(cells)
+      var valuee = cells[0].innerHTML;
+      console.log(valuee)
+      document.getElementById("t_name").value = valuee
+      var editBtn = document.getElementById("upbtn")
+      editBtn.innerHTML = `<button  onclick='obj.up(${row.rowIndex})'>update</button>`;
+    }
+    up(r) {
+      var tab = document.querySelector("#addtask")
+      var row = tab.rows[r];
+      var cell = row.cells[0];
+      cell.innerHTML = document.getElementById("t_name").value;
+      var editBtn = document.getElementById("upbtn");
+      editBtn.style.display = "none"
+      document.getElementById("t_name").value = ""
+    }
+}
+const obj=new Task;
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
